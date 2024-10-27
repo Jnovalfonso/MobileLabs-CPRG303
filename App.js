@@ -9,29 +9,30 @@ import { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  Pressable,
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  Button
+  Alert,
 } from 'react-native';
 
 import  ToDoList  from './components/ToDoList';
 import ToDoForm from './components/ToDoForm';
 
 function App() {
-  const [tasks, setTasks] = useState([
-    'Do laundry',
-    'Go to gym',
-    'Walk dog',
-    'Finish Mobile Dev Lab'
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (newTask) => {
+    for (let task of tasks){
+      if (task.toLowerCase() == newTask.toLowerCase()){
+        return Alert.alert('Task was already added');
+      } 
+    }
+
+    setTasks([...tasks, newTask])
+    
+  };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{padding: 20, marginVertical: 20,}}>
       <ToDoList tasks={tasks}/>
-      <ToDoForm />     
+      <ToDoForm addTask={addTask}/>     
     </SafeAreaView>
   );
 }
